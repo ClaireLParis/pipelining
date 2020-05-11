@@ -1,4 +1,4 @@
-# How to install Apache Airflow on MAC?
+# How to install Apache Airflow on Unix based OS?
 
 Make sure you have python3 installed, otherwise follow the instructions in this list: 
 - For Mac OS: https://docs.python-guide.org/starting/install3/osx/
