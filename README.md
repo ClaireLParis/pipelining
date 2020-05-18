@@ -31,7 +31,7 @@ Once connected we are going to install Airflow, just as you did on your personal
 1. `pip install pip --upgrade`
 1. `pip install boto3`
 1. Now, make sure `python` displays Python 3.x.x.
-1. Now install development toolkit, `sudo yum groupinstall "Development Tools”`
+1. Now install development toolkit, `sudo yum groupinstall "Development Tools"`
 1. Then install python3 development tools, `sudo yum install python3-devel`
 1. Finally, install Apache Airflow, `pip3 install apache-airflow`
 1. Once the installation is successful, initialize Airflow DB `airflow initdb`
