@@ -25,11 +25,11 @@ Once connected we are going to install Airflow, just as you did on your personal
 
 1. First of all, let's install pip, to do so, `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py` and `python get-pip.py`
 1. Then, let's install python3, run the following commands:
-1. `sudo yum install python3 -y`
-1. `python3 -m venv my_app/env`
-1. `source ~/my_app/env/bin/activate`
-1. `pip install pip --upgrade`
-1. `pip install boto3`
+1. To install python3, run: `sudo yum install python3 -y`
+1. Now, let's create a virtual environment by doing: `python3 -m venv my_app/env`
+1. Let's activate the virtual env.: `source ~/my_app/env/bin/activate`
+1. Upgrade pip: `pip install pip --upgrade`
+1. Install boto3: `pip install boto3`
 1. Now, make sure `python` displays Python 3.x.x.
 1. Now install development toolkit, `sudo yum groupinstall "Development Tools"`
 1. Then install python3 development tools, `sudo yum install python3-devel`
