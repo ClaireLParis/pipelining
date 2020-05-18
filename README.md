@@ -29,8 +29,9 @@ Once connected we are going to install Airflow, just as you did on your personal
 1. Then install python3 development tools, `sudo yum install python3-devel`
 1. Finally, install Apache Airflow, `pip3 install apache-airflow`
 1. Once the installation is successful, initialize Airflow DB `airflow initdb`
-1. Eventually, run the webserver and the scheduler *as deamons* (thanks to `&&`): `airflow webserver &&` followed by `airflow scheduler &&`.
-1. 🎉 *Congratulations you just installed Apache Airflow in the cloud*
+1. Eventually, run the webserver and the scheduler **as deamons** (thanks to `&&`): `airflow webserver &&` followed by `airflow scheduler &&`.
+1. Verify the installation by opening a browser in your computer and copy/paste the public IP of the EC2 instance followed by `:8080` in the address bar.
+1. 🎉 **Congratulations you just installed Apache Airflow in the cloud**
 
 ### Continuous deployment
 In order to gain productivity during your development of the pipeline, we want to synchronize your local work with the remote instance, to do so - in the simplest possible way - we are going to use a [crontab](https://doc.ubuntu-fr.org/cron).
