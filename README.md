@@ -87,8 +87,7 @@ Symmetrically, loading a model from disk:
 
 ```python
 # load the model from disk
+filename = 'finalized_model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
-result = loaded_model.score(X_test, Y_test)
-print(result)
 ```
 
