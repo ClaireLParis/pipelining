@@ -23,8 +23,14 @@ Now, let's connect to it through ssh:
 
 Once connected we are going to install Airflow, just as you did on your personal computers.
 
-1. First of all, [install pip](https://pip.pypa.io/en/stable/installing/)
-1. Then, [install python3](https://aws.amazon.com/fr/premiumsupport/knowledge-center/ec2-linux-python3-boto3/)
+1. First of all, let's install pip, to do so, `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py` and `python get-pip.py`
+1. Then, let's install python3, run the following commands:
+1. `sudo yum install python3 -y`
+1. `python3 -m venv my_app/env`
+1. `source ~/my_app/env/bin/activate`
+1. `pip install pip --upgrade`
+1. `pip install boto3`
+1. Now, make sure `python` displays Python 3.x.x.
 1. Now install development toolkit, `sudo yum groupinstall "Development Tools”`
 1. Then install python3 development tools, `sudo yum install python3-devel`
 1. Finally, install Apache Airflow, `pip3 install apache-airflow`
