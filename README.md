@@ -1,7 +1,7 @@
 # pipelining
 Executive master Intelligence Artificielle et Science des données, cours : Données sur le cloud
 
-[Link to the course slides](https://docs.google.com/presentation/d/1y02d8T-svCBt_LePXXv-q00uTskQCgrmHtUv6nTxF-Q/edit?usp=sharing)
+➡[Link to the course slides](https://docs.google.com/presentation/d/1y02d8T-svCBt_LePXXv-q00uTskQCgrmHtUv6nTxF-Q/edit?usp=sharing) ⬅
 
 
 ## Lab Session 
