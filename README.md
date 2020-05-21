@@ -50,6 +50,7 @@ To do so, you'll need to create a git accound if needed, and a public git reposi
 
 #### Instructions
 1. Create a public git repository containing a `README.md` file and a `dags` folder.
+
 **On your local environment:**
 1. Clone the git repository in the same context than your airflow installation, not necessarily the same location, but somewhere nearby: `git clone https://github.com/{user_name}/{repository_name}`
 
