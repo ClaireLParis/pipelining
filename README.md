@@ -40,46 +40,54 @@ Once connected we are going to install Airflow, just as you did on your personal
 1. 🎉 **Congratulations you just installed Apache Airflow in the cloud**
 
 ### Continuous deployment
-In order to gain productivity during your development of the pipeline, we want to synchronize your local work with the remote instance, to do so - in the simplest possible way - we are going to use a [crontab](https://doc.ubuntu-fr.org/cron).
+In order to gain productivity during the development of your pipeline, we want to synchronize your local work with the remote instance, to do so - in the simplest possible way - we are going to use a [crontab](https://doc.ubuntu-fr.org/cron).
+A crontab is a simple mechanism that allows us to execute a bash command on a specific schedule.
+
+We will use this mechanism on the remote instance to synchronize your master branch.
 
 To do so, you'll need to create a git accound if needed, and a public git repository, it will host python Airflow DAGs, libraries and dependencies.
 
-On the remote host:
-- Install git if needed.
-- Set a cron using `crontab -e` to pull your public git repository's master branch every minute. 
-- Make sure the git repository is correctly pulled by pushing a dummy commit in master.
+#### Instructions
+1. Create a public git repository containing a `README.md` file and a `dags` folder.
+**On your local environment:**
+1. Clone the git repository in the same context than your airflow installation, not necessarily the same location, but somewhere nearby: `git clone https://github.com/{user_name}/{repository_name}`
 
+**On the remote instance:**
+1. Set a cron using `EDITOR=nano crontab -e` to pull your public git repository's master branch every minute, the command should be: `* * * * * cd /home/ec2-user/iasd; git pull origin master`, `iasd` should be modified to match your git repository name. To exit the nano editor: `ctrl+x` > `"Yes"` > `Enter`.
+1. Make sure the git repository is correctly pulled by pushing a dummy commit in master.
+
+
+🎉 **Congratulations you just synchronized your local work with a remote instance through GitHub**
 
 ### Creating your first ML pipeline on Airflow
 
-The idea is to wrap (this model - part 1)[https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/] in a PythonOperator. You can of course try to wrap your own python model or a Spark job you already have (contact me for the latter).
+We are going to train a Random Forest model based on [this blog post (part 1)](https://stackabuse.com/random-forest-algorithm-with-python-and-scikit-learn/). You can of course try to wrap your own python model or a Spark job you already have (contact me for the latter).
 
-First of all, [download this csv](https://drive.google.com/file/d/1mVmGNx6cbfvRHC_DvF12ZL3wGLSHD9f_/view) and put it in S3.
+#### Generating an AWS programatic access
+Now you've Airflow all setup up and running let's make it communicate with AWS, to do so we have to generate a new programatic user dedicated to Airflow on the AWS console.
 
-Once you've Airflow all setup up and running, go to the AWS console to generate a new programatic user dedicated to Airflow.
+1. Go to the AWS console website.,
+1. In services, go to "Identity and Access Management" (IAM),
+1. Click on the menu item "Access Management" in the left pan,
+1. Then, click on "Users", then click on "Add new user",
+1. Add a user name then click on "Programmatic access", click on "Next: Permissions",
+1. Now, click on "Attach existing policies directly" and select the following: `AmazonS3FullAccess`, `AmazonElasticMapReduceFullAccess`, `AmazonEC2FullAccess`, `AmazonSageMakerFullAccess`
+1. Then, click on "Next: Tags", "Next: Review" and finally "Create user". 
+1. Now you have access to the Access Key and Secret access key, copy/paste them on your computer, we will set them in the Airflow We interface in the tab Admin > Connections, to give the permissions to Airflow for managing AWS services on your behalf.
 
-In services, go to "Identity and Access Management" (IAM), in "Access Management", click on "Users", then click on "Add new user".
+You're all set, now let's deep dive in the pipeline creation.
 
-Add a user name then click on "Programmatic access", click on "Next: Permissions".
-
-Now, click on "Attach existing policies directly" and select the following:
-- AmazonS3FullAccess
-- AmazonElasticMapReduceFullAccess
-- AmazonEC2FullAccess
-- AmazonSageMakerFullAccess
-
-Then, click on "Next: Tags", "Next: Review" and finally "Create user". 
-Now you have access to the Access Key and Secret access key, copy/paste them on your computer, we will set them in the Airflow We interface in the tab Admin > Connections, to give the permissions to Airflow for managing AWS services on your behalf.
-
-Now that Airflow is all set and it can communicate with AWS, let's deep dive in the pipeline creation.
+##### Airflow DAG
 The idea is to wrap an already made model in a `PythonOperator` that takes the downloaded data file as a parameter, and the model output location as a parameter.
 
-- Have a look at [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html) for handling the communication with AWS S3.
-- Here is an example of a [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html) in use.
-- Also, have a look at [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
+
+1. First of all, [download this csv](https://drive.google.com/file/d/1mVmGNx6cbfvRHC_DvF12ZL3wGLSHD9f_/view) and put it in S3.
+1. Have a look at [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html) for handling the communication with AWS S3.
+1. Here is an example of a [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html) in use.
+1. Also, have a look at [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
 
 
-#### Note: pickle
+##### Note: pickle
 Saving a model to disk is as simple as:
 
 ```python
