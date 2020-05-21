@@ -35,7 +35,7 @@ Once connected we are going to install Airflow, just as you did on your personal
 	1. Then install python3 development tools, `sudo yum install python3-devel`
 1. Finally, install Apache Airflow, `pip3 install apache-airflow`
 1. Once the installation is successful, initialize Airflow DB `airflow initdb`
-1. Eventually, run the webserver and the scheduler **as deamons** (thanks to `&`): `airflow webserver &` hit enter, then  `airflow scheduler &` hit enter.
+1. Eventually, run the webserver and the scheduler **as deamons** (thanks to `&`): `airflow webserver &` hit enter, then  `airflow scheduler &` hit enter. **Everytime you restart your EC2 node you'll have to restart those two services to user Airflow (don't forget to be in your virtual environment `source ~/my_app/env/bin/activate` ⬆)**.
 	* Note: In real life we use a service manager, like [systemd](https://doc.ubuntu-fr.org/systemd) to handle start/stop of services on your behalf, you can try configuring one by following [this guide](https://doc.ubuntu-fr.org/creer_un_service_avec_systemd).
 1. Verify the installation by opening a browser in your computer and copy/paste the public IP of the EC2 instance followed by `:8080` in the address bar.
 1. 🎉 **Congratulations you just installed Apache Airflow in the cloud**
