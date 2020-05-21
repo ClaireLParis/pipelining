@@ -83,7 +83,7 @@ You're all set, now let's deep dive in the pipeline creation.
 The idea is to wrap an already made model in a `PythonOperator` that takes the downloaded data file as a parameter, and the model output location as a parameter.
 
 
-1. First of all, [download this csv](https://drive.google.com/file/d/1mVmGNx6cbfvRHC_DvF12ZL3wGLSHD9f_/view) and put it in S3.
+1. First of all, [download this csv](https://drive.google.com/file/d/1mVmGNx6cbfvRHC_DvF12ZL3wGLSHD9f_/view) and put it in S3 (go to the S3 service on AWS console and drag&drop the CSV file in your browser).
 1. Have a look at [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html) for handling the communication with AWS S3.
 1. Here is an example of a [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html) in use.
 1. Also, have a look at [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
