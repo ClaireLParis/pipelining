@@ -25,17 +25,18 @@ Once connected we are going to install Airflow, just as you did on your personal
 
 1. First of all, let's install pip, to do so, `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py` and `python get-pip.py`
 1. Then, let's install python3, run the following commands:
-1. To install python3, run: `sudo yum install python3 -y`
-1. Now, let's create a virtual environment by doing: `python3 -m venv my_app/env`
-1. Let's activate the virtual env.: `source ~/my_app/env/bin/activate`
-1. Upgrade pip: `pip install pip --upgrade`
-1. Install boto3: `pip install boto3`
-1. Now, make sure `python` displays Python 3.x.x.
-1. Now install development toolkit, `sudo yum groupinstall "Development Tools"`
-1. Then install python3 development tools, `sudo yum install python3-devel`
+	1. To install python3, run: `sudo yum install python3 -y`
+	1. Now, let's create a virtual environment by doing: `python3 -m venv my_app/env`
+	1. Let's activate the virtual env.: `source ~/my_app/env/bin/activate`
+	1. Upgrade pip: `pip install pip --upgrade`
+	1. Install boto3: `pip install boto3`
+	1. Now, make sure `python` displays Python 3.x.x.
+	1. Now install development toolkit, `sudo yum groupinstall "Development Tools"`
+	1. Then install python3 development tools, `sudo yum install python3-devel`
 1. Finally, install Apache Airflow, `pip3 install apache-airflow`
 1. Once the installation is successful, initialize Airflow DB `airflow initdb`
 1. Eventually, run the webserver and the scheduler **as deamons** (thanks to `&`): `airflow webserver &` hit enter, then  `airflow scheduler &` hit enter.
+	* Note: In real life we use a service manager, like [systemd](https://doc.ubuntu-fr.org/systemd) to handle start/stop of services on your behalf, you can try configuring one by following [this guide](https://doc.ubuntu-fr.org/creer_un_service_avec_systemd).
 1. Verify the installation by opening a browser in your computer and copy/paste the public IP of the EC2 instance followed by `:8080` in the address bar.
 1. 🎉 **Congratulations you just installed Apache Airflow in the cloud**
 
