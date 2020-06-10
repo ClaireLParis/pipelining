@@ -95,7 +95,7 @@ Create an empty DAG file that will do the following:
 
 
 To do so, you'll need:
-1. Install `pandas` and `sklearn` (don't forget to do it in your virtual environment `source ~/my_app/env/bin/activate` ⬆️).
+1. Install `pandas` and `sklearn` on the Airflow node and locally (don't forget to do it in your virtual environment `source ~/my_app/env/bin/activate` ⬆️).
 1. [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html), to communicate with S3 (download, upload).
 1. [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html), that will contain the model generator.
 1. [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
