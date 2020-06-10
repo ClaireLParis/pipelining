@@ -84,12 +84,29 @@ You're all set, now let's deep dive in the pipeline creation.
 ##### Airflow DAG
 The idea is to wrap an already made model in a `PythonOperator` that takes the downloaded data file as a parameter, and the model output location as a parameter.
 
+**Instructions**
 
-1. First of all, [download this csv](https://drive.google.com/file/d/1mVmGNx6cbfvRHC_DvF12ZL3wGLSHD9f_/view) and put it in S3 (go to the S3 service on AWS console and drag&drop the CSV file in your browser).
-1. Have a look at [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html) for handling the communication with AWS S3.
-1. Here is an example of a [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html) in use.
-1. Also, have a look at [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
+Create an empty DAG file that will do the following:
+- Download the dataset from S3 to a know path: https://iasd-data-in-the-cloud.s3.eu-west-3.amazonaws.com/petrol_consumption.csv.
+- Then, triggers a PythonOperator to create a pickle of a trained regression model using the Random Forest algorithm: [here is the code to adapt](https://github.com/faouzelfassi/pipelining/blob/master/model.py). You should be able to pass the filepath to the data set as an argument to the PythonOperator.
+- Upload the model pickle to S3 in a timestamped folder (folder named after the execution date of the pipeline).
+- Delete the dataset and the model pickle from local storage.
 
+
+To do so, you'll need:
+1. [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html), to communicate with S3 (download, upload).
+1. [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html), that will contain the model generator.
+1. [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
+
+Here is an example of macros in use, in this example we delete a dynamically created file (containing the execution date of the pipeline in its name) using a BashOperator. 
+
+```python
+delete_csv = BashOperator(
+    task_id="delete_csv",
+    bash_command="rm {}".format(OUTPUT_CSV_FILEPATH.replace(".csv", "{{ ds }}.csv")),
+    dag=dag,
+)
+```
 
 ##### Note: pickle
 Saving a model to disk is as simple as:
