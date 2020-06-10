@@ -87,10 +87,11 @@ The idea is to wrap an already made model in a `PythonOperator` that takes the d
 **Instructions**
 
 Create an empty DAG file that will do the following:
-- Download the dataset from S3 to a know path: https://iasd-data-in-the-cloud.s3.eu-west-3.amazonaws.com/petrol_consumption.csv.
-- Then, triggers a PythonOperator to create a pickle of a trained regression model using the Random Forest algorithm: [here is the code to adapt](https://github.com/faouzelfassi/pipelining/blob/master/model.py). You should be able to pass the filepath to the data set and the model output filepaht as arguments to the PythonOperator.
-- Upload the model pickle to S3 in a timestamped folder (folder named after the execution date of the pipeline).
-- Delete the dataset and the model pickle from local storage.
+
+- Download the dataset from S3 to a known path: https://iasd-data-in-the-cloud.s3.eu-west-3.amazonaws.com/petrol_consumption.csv.
+- Then, triggers a PythonOperator to create a pickle of a trained regression model using the Random Forest algorithm: [here is the code to adapt](https://github.com/faouzelfassi/pipelining/blob/master/model.py). You should be able to pass the filepath to the data set as an argument to the PythonOperator in addition to the model pickle desired location.
+- Then, uploads the model pickle to S3 in a timestamped folder (folder named after the execution date of the pipeline).
+- Eventually, deletes the dataset and the model pickle from local storage.
 
 
 To do so, you'll need:
@@ -102,6 +103,18 @@ To do so, you'll need:
 Here is an example of macros in use, in this example we delete a dynamically created file (containing the execution date of the pipeline in its name) using a BashOperator. 
 
 ```python
+from airflow.operators.bash_operator import BashOperator
+
+OUTPUT_CSV_FILEPATH = '/PATH/TO/MY_FILE.csv'
+
+dag = DAG(
+    "my_dag",
+    default_args=default_args,
+    max_active_runs=1,
+    concurrency=10,
+    schedule_interval="0 12 * * *",
+)
+
 delete_csv = BashOperator(
     task_id="delete_csv",
     bash_command="rm {}".format(OUTPUT_CSV_FILEPATH.replace(".csv", "{{ ds }}.csv")),
