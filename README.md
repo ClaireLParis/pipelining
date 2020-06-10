@@ -79,6 +79,8 @@ Now you've Airflow all setup up and running let's make it communicate with AWS, 
 1. Then, click on "Next: Tags", "Next: Review" and finally "Create user". 
 1. Now you have access to the Access Key and Secret access key, copy/paste them on your computer, we will set them in the Airflow We interface in the tab Admin > Connections, to give the permissions to Airflow for managing AWS services on your behalf.
 
+![Add the connection in Airflow UI](https://github.com/faouzelfassi/pipelining/blob/master/doc/airflow_add_connection.png?raw=true)
+
 You're all set, now let's deep dive in the pipeline creation.
 
 ##### Airflow DAG
