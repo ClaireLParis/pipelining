@@ -88,12 +88,13 @@ The idea is to wrap an already made model in a `PythonOperator` that takes the d
 
 Create an empty DAG file that will do the following:
 - Download the dataset from S3 to a know path: https://iasd-data-in-the-cloud.s3.eu-west-3.amazonaws.com/petrol_consumption.csv.
-- Then, triggers a PythonOperator to create a pickle of a trained regression model using the Random Forest algorithm: [here is the code to adapt](https://github.com/faouzelfassi/pipelining/blob/master/model.py). You should be able to pass the filepath to the data set as an argument to the PythonOperator.
+- Then, triggers a PythonOperator to create a pickle of a trained regression model using the Random Forest algorithm: [here is the code to adapt](https://github.com/faouzelfassi/pipelining/blob/master/model.py). You should be able to pass the filepath to the data set and the model output filepaht as arguments to the PythonOperator.
 - Upload the model pickle to S3 in a timestamped folder (folder named after the execution date of the pipeline).
 - Delete the dataset and the model pickle from local storage.
 
 
 To do so, you'll need:
+1. Install `pandas` and `sklearn` (don't forget to do it in your virtual environment `source ~/my_app/env/bin/activate` ⬆️).
 1. [S3Hook](https://airflow.apache.org/docs/stable/_modules/airflow/hooks/S3_hook.html), to communicate with S3 (download, upload).
 1. [PythonOperator](https://airflow.apache.org/docs/stable/howto/operator/python.html), that will contain the model generator.
 1. [Airflow Macros](https://airflow.apache.org/docs/stable/macros-ref.html#macros), handy for getting some variables around the execution of the DAG. Useful for outputing in a folder prefixed by a date representing the execution date of the pipeline run.
